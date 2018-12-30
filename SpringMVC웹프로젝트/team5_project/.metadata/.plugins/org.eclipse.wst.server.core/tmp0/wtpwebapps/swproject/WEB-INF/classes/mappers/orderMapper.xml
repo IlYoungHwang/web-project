@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seoil.mapper.OrderMapper">
+   
+
+  <insert id="ordercreate">
+  	insert coco_order values(null,#{userno}, #{usedno}, #{usename}, null, #{totalmoney},#{orderaddr},#{userphone},#{paymethod})
+  </insert>
+  
+  <select id="orderread" resultType="string">
+  	select * from coco_order where userno = #{userno}
+  </select>
+  
+  
+   <select id="ocountPaging" resultType="int">
+   	<![CDATA[
+   	 select 
+   	 	count(orderno)
+   	 from 
+   	 	coco_order
+   	 where orderno > 0
+   	]]>
+   </select>
+
+	<select id="orderCriteria" resultType="OrderVO">
+		<![CDATA[
+			select coco_order.orderno, coco_used.manuf as usedname, coco_user.name as username, coco_order.orderdate, coco_order.totalmoney
+			from coco_user join coco_used on coco_user.no = coco_used.userno join coco_order on coco_used.no = coco_order.usedno
+			where orderno > 0
+			order by orderno desc, orderdate desc
+			limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+</mapper>

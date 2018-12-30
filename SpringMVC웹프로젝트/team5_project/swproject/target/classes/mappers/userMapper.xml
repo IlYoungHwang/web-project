@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seoil.mapper.UserMapper">
+   <!--  -->
+   
+   
+   <!-- 면허정보불러오기 -->
+   <select id="liceninfo" resultType="LicenVO">
+   select * from coco_licen where userno = #{no}
+   </select>
+   
+   <!-- 면허정보저장 -->
+   <insert id="licencreate">
+   	insert coco_licen values (#{no},#{name},#{birth},#{licentype},#{licennum},#{issu},#{expir},#{address})
+   </insert>
+   
+   <!-- 회원 회원가입 정보 저장 -->
+   <insert id="create">
+   	insert coco_user values (null,#{email},#{passwd},#{name},#{phone},#{address},null,#{auth})
+   </insert>
+   
+   <!-- 구매자 프로필정보 불러오기 -->
+   <select id="buyerinfo" resultType="UserVO">
+   	select * from coco_user where no=#{no}
+   </select>
+   
+   <!-- 세션 로그인 정보 불러오기 -->
+   <select id="login" resultType="UserVO">
+   	select no, email, passwd, name, phone, address, auth, point from coco_user where email = #{email} and passwd = #{passwd}
+   </select>
+   
+   <!-- 구매자 프로필 수정 -->
+   <update id="buyerupdate">
+   	update coco_user set email = #{email}, name = #{name}, phone = #{phone}, address = #{address} where no = #{no}
+   </update>
+   
+   <update id="sellerupdate">
+   	update coco_user set email = #{email}, name = #{name}, phone = #{phone}, address = #{address} where no = #{no}	
+   </update>
+   
+   <select id="sellerinfo" resultType="UserVO">
+   	select * from coco_user where no=#{no}
+   </select>
+   
+   
+  	<update id="pwupdate">
+  		update coco_user set passwd = #{passwd} where no = #{no}
+  	</update>
+  
+</mapper>

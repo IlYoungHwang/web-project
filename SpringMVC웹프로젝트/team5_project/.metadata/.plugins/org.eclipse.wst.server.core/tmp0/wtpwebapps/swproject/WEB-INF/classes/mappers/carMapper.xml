@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seoil.mapper.CarMapper">
+   <!--  -->
+   
+   
+    <sql id="usedsearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and manuf like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and name like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+   
+   
+   <sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and name like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and loc like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+   
+   <select id="rentSearch" resultType="RentVO">
+   	<![CDATA[
+   		select *
+   		from coco_rent LEFT OUTER JOIN coco_attach on coco_attach.rentno=coco_rent.no
+   		where no > 0
+   	]]>
+   	
+   	<include refid="search"></include>
+   	<![CDATA[
+   		order by no desc
+   		limit #{pageStart}, #{perPageNum}
+   	]]>
+   	
+   	
+   </select>
+
+   
+   <select id="rentSearchCount" resultType="int">
+   	<![CDATA[
+   		select count(no)
+   		from coco_rent
+   		where no > 0
+   	]]>
+   	<include refid="search"></include>
+   </select>
+   
+   
+   
+   <select id="usedSearch" resultType="UsedVO">
+   	<![CDATA[
+   		select *
+   		from coco_used LEFT OUTER JOIN coco_attach on coco_attach.usedno=coco_used.no
+   		where no > 0
+   	]]>
+   	
+   	<include refid="usedsearch"></include>
+   	<![CDATA[
+   		order by no desc
+   		limit #{pageStart}, #{perPageNum}
+   	]]>
+   	
+   	
+   </select>
+
+   
+   <select id="usedSearchCount" resultType="int">
+   	<![CDATA[
+   		select count(no)
+   		from coco_used
+   		where no > 0
+   	]]>
+   	<include refid="usedsearch"></include>
+   </select>
+   
+   
+   <!-- 메인화면 렌트차량 최신게시물 순으로 3개보이기 -->
+   <select id="rentmain" resultType="string">
+   	select name, state from coco_rent order by regdate desc limit 3
+   </select>
+   
+   <!-- 메인화면 중고차량 최신게시물 순으로 3개보이기 -->
+   <select id="usedmain" resultType="string">
+   	select name, appro from coco_used order by regdate desc limit 3
+   </select>
+   
+   <!-- 렌트차량 이미지 삭제  -->
+   <delete id="rentAttachdel">
+   	delete from coco_attach where rentno = #{no}
+   </delete>
+   
+   <!-- 렌트 차량 이미지 수정 -->
+   <insert id="rentreplaceAttach">
+   	insert coco_attach values(#{fullName}, #{no},null,null)
+   </insert>
+   
+   
+   <!-- 중고차량 이미지 삭제 -->
+   <delete id="usedAttachdel">
+   	delete from coco_attach where usedno = #{no}
+   </delete>
+   <!-- 렌트차량 이미지 수정  -->
+   <insert id="usedreplaceAttach">
+   	insert coco_attach values(#{fullName}, null,#{no},null)
+   </insert>
+   
+   
+   <!-- 중고차량 이미지 불러오기  -->
+   <select id="usedgetAttach" resultType="string">
+   	select fullName from coco_attach where usedno = #{no};
+   </select>
+   
+   <!-- 렌트차량 이미지 불러오기  -->
+   <select id="rentgetAttach" resultType="string">
+   	select fullName from coco_attach where rentno = #{no};
+   </select>
+   
+   <!-- 렌트차량 이미지 저장  -->
+   <insert id="rentaddAttach">
+   	insert coco_attach values(#{fullName},LAST_INSERT_ID(),null,null)
+   </insert>
+   
+   <!-- 중고차량 이미지 저장  -->
+   <insert id="usedaddAttach">
+   	insert coco_attach values(#{fullName},null,LAST_INSERT_ID(),null)
+   </insert>
+   
+   
+   <select id="rcountPaging" resultType="int">
+   	<![CDATA[
+   	 select 
+   	 	count(no)
+   	 from 
+   	 	coco_rent
+   	 where no > 0
+   	]]>
+   	
+   </select>
+
+	<select id="rentCriteria" resultType="RentVO">
+		<![CDATA[
+			select *
+			from coco_rent LEFT OUTER JOIN coco_attach on coco_attach.rentno=coco_rent.no
+			where no > 0
+			order by no desc, regdate desc
+			limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+   
+   
+   <select id="ucountPaging" resultType="int">
+   	<![CDATA[
+   	 select 
+   	 	count(no)
+   	 from 
+   	 	coco_used
+   	 where no > 0
+   	]]>
+   	
+   </select>
+
+	<select id="usedCriteria" resultType="UsedVO">
+		<![CDATA[
+			select *
+			from coco_used LEFT OUTER JOIN coco_attach on coco_attach.usedno=coco_used.no
+			where no > 0
+			order by no desc, regdate desc
+			limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+
+	
+
+	
+	
+	<!-- 렌트차량 수정 -->
+	<update id="rentupdate">
+	 update coco_rent set name = #{name}, loc = #{loc}, fee = #{fee}, fuel = #{fuel}, opt = #{opt}, regdate = #{regdate}
+	 where no = #{no}
+	</update>
+
+	<!-- 중고차량 수정 -->
+	<update id="usedupdate">
+	 update coco_used set manuf = #{manuf}, name = #{name}, year = #{year}, color = #{color}, carnum = #{carnum}, trans = #{trans}, fuel = #{fuel}, seize=#{seize}, acci=#{acci}, opt=#{opt}, driv=#{driv}, regdate=#{regdate},pay=#{pay}
+	 where no = #{no}
+	
+	</update>
+	<!-- 렌트차량 정보 삭제 -->
+	<delete id="rentdelete">
+	 delete from coco_rent where no = #{no}
+	</delete>
+	
+	<!-- 중고차량 정보 삭제 -->
+	<delete id="useddelete">
+	 delete from coco_used where no = #{no}
+	</delete>
+
+ 	<!-- 렌트차량 정보 불러오기 -->
+	<select id="rentread" resultType="RentVO">
+	 select * from coco_rent where no = #{no}
+	</select>
+
+	<!-- 중고차량 정보 불러오기 -->
+	<select id="usedread" resultType="UsedVO">
+	 select * from coco_used join coco_attach on coco_used.no=coco_attach.usedno where no = #{no}
+	</select>
+	   
+   
+   <!-- 최근등록일 렌트차량 불러오기 -->
+   <select id="latelyrent" resultType="RentVO">
+   	select * from coco_rent regdate  limit 3;
+   </select>
+   
+   <!-- 최근등록일 중고차량 불러오기 -->
+   <select id="latelyused" resultType="UsedVO">
+   select * from coco_used regdate  limit 3;
+   </select>
+   
+
+   <!-- 렌트차량 저장 -->
+   <insert id="rentcreate">
+   	insert into coco_rent(no,userno,name,fee,fuel,opt,loc,regdate) values (null,#{userno},#{name},#{fee},#{fuel},#{opt},#{loc},null)
+   </insert>
+
+   
+   <!-- 중고차량 저장 -->
+   <insert id="usedcreate">
+   	insert into coco_used(no,userno,manuf,name,year,color,carnum,trans,fuel,seize,acci,opt,driv,regdate,pay) values (null,#{userno},#{manuf},#{name},#{year},#{color},#{carnum},#{trans},#{fuel},#{seize},#{acci},#{opt},#{driv},null,#{pay})
+   </insert>
+  
+  <!-- 중고차량 목록 보여주기 -->
+  <select id="usedlistAll" resultType="UsedVO">
+  	<![CDATA[
+  	select 
+  		* 
+  	from
+  		coco_used
+  	where no > 0
+  	order by no desc, regdate desc
+  	]]>
+  </select>
+  
+  
+  <select id="rentlistAll" resultType="RentVO">
+  	<![CDATA[
+  	select
+  		*
+  	from
+  		coco_rent
+  	where no > 0
+  	order by no desc, regdate desc
+  	]]>
+  
+  </select>
+</mapper>

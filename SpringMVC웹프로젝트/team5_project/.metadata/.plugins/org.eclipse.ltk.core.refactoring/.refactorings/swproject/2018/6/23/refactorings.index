@@ -1,0 +1,29 @@
+1528122290745	Move 'loginPost.jsp' to 'user'
+1528122443657	Delete element
+1528122491325	Delete element
+1528122503142	Delete element
+1528123934244	Move 'login.jsp' to 'userview'
+1528123936489	Move 'loginPost.jsp' to 'userview'
+1528123940940	Delete element
+1528176176313	Delete element
+1528179841666	Rename resource 'liceInfo.jsp'
+1528183255427	Delete elements
+1528208530731	Move 'sellerLogin.jsp' to 'views'
+1528208687906	Move 'sellerLogin.jsp' to 'userview'
+1528209745465	Move 'usedAdd.jsp' to 'sellerinfo'
+1528209750434	Move 'rentAdd.jsp' to 'sellerinfo'
+1528257010728	Rename package 'util'
+1528257050334	Delete elements
+1528257056338	Delete element
+1528258491561	Delete element
+1528264473774	Delete element
+1528289113225	Move 'resources' to 'WEB-INF'
+1528289199299	Move 'resources' to 'webapp'
+1528291058472	Delete elements
+1528349987768	Move 'gg.png' to 'credit'
+1528350105414	Delete element
+1528383364085	Delete element
+1528424893048	Delete element
+1528426880064	Delete element
+1528504863618	Move 'rentInfo.jsp' to 'carview'
+1528505808946	Move 'rentInfo.jsp' to 'sellerinfo'
