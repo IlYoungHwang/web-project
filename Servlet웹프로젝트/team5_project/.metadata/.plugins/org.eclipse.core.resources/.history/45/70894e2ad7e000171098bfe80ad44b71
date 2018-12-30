@@ -1,0 +1,55 @@
+<%@page import="member.vo.MemberVO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html lang="en">
+<head>
+  <title>먹을꺼내놔 로그인페이지</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./resouce/css/bootstrap.min.css">
+  <script src="./resouce/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./resouce/css/indexjsp.css"></link>
+  
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<a class="navbar-brand"  href="index.jsp">Home</a>
+		<p class="navbar-text">현재위치가 비활성화 입니다.</p>
+    </div>
+    
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <%
+			MemberVO member  = (MemberVO)session.getAttribute("member");
+			if(member != null){
+		%>
+				<li><a href="login.jsp"> ${member.name} 님 로그인중</a></li>
+		<%}else{ // 세션 로그인 안했을때 안보여줌%>
+				<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+				<li><a href="user_signup.jsp"><span class="glyphicon glyphicon-log-in"></span> 회원가입</a></li>
+		<% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+	<article class="container">
+        <div class="page-header text-center">
+          <h1>로그인</h1>
+           
+        </div>
+        
+        <div class="col-md-6 col-md-offset-3 text-center">
+        <img src="./IMAGE/Search.gif" class="img-rounded" alt="Bird" width="300" height="300"><br><br>
+            <div class="form-group text-center">
+               <input class="btn btn-lg btn-primary " type="button" value="구매자 로그인" onClick="self.location='user_login.jsp';"/>
+               <input class="btn btn-lg btn-primary " type="button" value="판매자 로그인" onClick="self.location='seller_login.jsp';"/>
+            </div>
+        </div>
+     </article>
+  </body>
+</html>

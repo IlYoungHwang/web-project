@@ -1,0 +1,121 @@
+<%@page import="member.vo.MemberVO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<html>
+<head>
+<title>판매정보 생성 페이지</title>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./RESOUCE/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="./RESOUCE/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./RESOUCE/css/indexjsp.css"></link>
+  <script type="text/javascript">
+        $(function() {
+            $("#file").on('change', function(){
+                readURL(this);
+            });
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+
+              reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+</script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<a class="navbar-brand"  href="index.jsp">Home</a>
+		<p class="navbar-text" id="demo">현재위치가 비활성화 입니다.</p>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+      	<%
+			MemberVO member  = (MemberVO)session.getAttribute("member");
+			if(member != null){
+				
+		%>
+				<li><a href="login.jsp"> ${member.name} 님 로그인중</a></li>
+				<li><a href="logout.jsp"><span class="glyphicon glyphicon-log-in"></span>  로그아웃</a></li>
+			<% if(member.getDivision().equals("0")){%>
+				<li><a href="user_modified.jsp"><span class="glyphicon glyphicon-log-in"></span>  회원정보수정</a></li>
+			<% } else {%>
+				<li><a href="seller_modified.jsp"><span class="glyphicon glyphicon-log-in"></span>  회원정보수정</a></li>
+			<% } %>
+		<%}else{ // 세션 로그인 안했을때 안보여줌%>
+				<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+				<li><a href="user_signup.jsp"><span class="glyphicon glyphicon-log-in"></span> 회원가입</a></li>
+		<% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container">
+      <div class="page-header text-center">
+          <h1>물품 등록</h1>
+        </div>
+     <% if(member != null){%>
+      <form class="form-signin" method="post" enctype="multipart/form-data" action="memberSaleInsert.do" role="form">
+      <div class="row">
+            <div class="col-md-2 col-md-offset-3  text-center">
+            <div class="form-group">
+            	<label for="Name">물품 사진</label>
+            	<img src="#" id="blah" class="img-thumbnail" width="200" height="200"><br><br>
+            	<input type="file" id="file">
+            </div>
+            </div>
+            <div class="col-md-4 col-md-offset-0 text-left"> 
+            <div class="form-group">
+              <label for="Class">물품 분류</label><br>
+              	<select name="saleclass">
+  					<option value="a">치킨</option>
+  					<option value="b">중식</option>
+  					<option value="c">피자</option>
+  					<option value="d">족발/보쌈</option>
+  					<option value="e">야식</option>
+  					<option value="f">찜/탕</option>
+  					<option value="g">한식/분식</option>
+  					<option value="h">돈가스/일식/회</option>
+  					<option value="i">도시락/죽/패스트푸드</option>
+				</select>
+            </div>
+            <div class="form-group">
+              <label for="Name">물품 이름</label>
+              <input type="text" name="salename" class="form-control" placeholder="물품 이름"required autofocus>
+            </div>
+            <div class="form-group">
+              <label for="Option">물품옵션</label>
+              <input type="text" name="saleoption" class="form-control" placeholder="물품 옵션" required autofocus>
+            </div>
+            <div class="form-group">
+              <label for="Foodinfo">식재료 정보</label>
+              <textarea class="form-control" rows="5" name="salefoodinfo" placeholder="식재료 정보"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="Price">가격</label>
+              <input type="text" name="saleprice" class="form-control" placeholder="가격" required autofocus>
+            </div>
+
+            <div class="form-group text-center">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">생성</button>
+            </div>
+            </div>
+            </div>
+          </form>
+      <% } %>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+package member.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import member.service.MemberService;
+import member.vo.MemberVO;
+
+public class MemberSaleUpdateController implements Controller {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String sale_id = request.getParameter("sale_id");
+		String saleclass = request.getParameter("saleclass");
+		String salename = request.getParameter("salename");
+		String saleoption = request.getParameter("saleoption");
+		String salefoodinfo = request.getParameter("salefoodinfo");
+		String saleprice = request.getParameter("saleprice");
+		
+		MemberVO member = new MemberVO();
+		member.setSale_id(sale_id);
+		member.setSaleClass(saleclass);
+		member.setSaleName(salename);
+		member.setSaleOption(saleoption);
+		member.setSaleFoodinfo(salefoodinfo);
+		member.setSaleprice(saleprice);
+		
+		
+		MemberService service = MemberService.getInstance();
+		int result = service.memberUserUpdate(member);
+		
+		if(result == 1){
+			session.setAttribute("member", member);
+			HttpUtil.forward(request, response, "/result/sale_updateOutput.jsp");
+		}
+		
+	}
+}

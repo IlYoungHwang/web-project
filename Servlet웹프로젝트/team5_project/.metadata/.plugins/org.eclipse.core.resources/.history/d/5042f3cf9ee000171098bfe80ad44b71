@@ -1,0 +1,37 @@
+package member.service;
+
+import member.dao.MemberDAO;
+import member.vo.MemberVO;
+
+
+public class MemberService {
+	private static MemberService service = new MemberService();
+	public MemberDAO dao = MemberDAO.getInstance();
+	private MemberService(){}
+	
+	public static MemberService getInstance(){
+		return service;
+	}
+	public void memberUserInsert(MemberVO member){
+		dao.memberUserInsert(member);
+	}
+	
+	public MemberVO memberLogin(String mail, String passwd){
+		MemberVO member = dao.memberLogin(mail,passwd);
+		return member;
+	}
+	
+	public int memberUserUpdate(MemberVO member){
+		int result = dao.memberUserUpdate(member);
+		return result;
+	}
+	
+	public int memberSellerUpdate(MemberVO member){
+		int result = dao.memberSellerUpdate(member);
+		return result;
+	}
+	
+	public void memberSaleInsert(MemberVO member){
+		
+	}
+}

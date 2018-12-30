@@ -1,0 +1,117 @@
+<%@page import="member.vo.MemberVO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html lang="en">
+<head>
+  <title>가입 페이지</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./RESOUCE/css/bootstrap.min.css">
+  <script src="./resouce/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./RESOUCE/css/indexjsp.css"></link>
+  
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<a class="navbar-brand"  href="index.jsp">Home</a>
+		<p class="navbar-text">현재위치가 비활성화 입니다.</p>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <%
+			MemberVO member  = (MemberVO)session.getAttribute("member");
+			if(member != null){
+		%>
+				<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> ${member.name} 님 로그인중</a></li>
+		<%}else{ // 세션 로그인 안했을때 안보여줌%>
+				<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li> 
+		<% } %>
+      	
+        <li><a href="user_signup.jsp"><span class="glyphicon glyphicon-log-in"></span> 회원가입</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <article class="container">
+        <div class="page-header text-center">
+          <h1>회원가입</h1>
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+          <form class="form-signin" method="post" action="memberUserInsert.do" role="form">
+            <div class="form-group">
+              <label for="Email">이메일 주소</label>
+              <input type="email" name="mail" class="form-control" placeholder="이메일 주소" required autofocus>
+            </div>
+            <div class="form-group">
+              <label for="Password">비밀번호</label>
+              <input type="password" name="passwd" class="form-control" placeholder="비밀번호" required autofocus>
+            </div>
+            <div class="form-group">
+              <label for="Name">이름</label>
+              <input type="text" name="name" class="form-control" placeholder="이름" required autofocus>
+            </div>
+            
+            <div class="form-group">
+              <label for="Address">주소</label>
+              <input type="text" name="address" class="form-control" placeholder="주소" required autofocus>
+            </div>
+           
+           <div class="form-group">
+              <label for="Phone">전화번호</label>
+              <input type="text" name="phone" class="form-control" placeholder="휴대폰입력 ('-'제외)" required autofocus>
+            </div>
+    		
+    		<div class="form-group">
+    		<label for="Division">가입자 구분</label>
+    			<div class="radio">
+ 					 <label>
+    					<input type="radio" name="division" value="0" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" checked>
+    						구매자
+  						</label>
+					</div>
+				<div class="radio">
+  					<label>
+    						<input type="radio" name="division" value="1" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+   						 	판매자
+ 					 </label>
+				</div>
+    		</div>
+    		
+			<div class="collapse" id="collapseExample">
+  				<div class="well-default">
+  				
+    				<div class="form-group">
+              			<label for="SelName">식당이름</label>
+              			<input type="text" name="sellername" class="form-control" placeholder="식당이름" >
+           			 </div>
+           			 
+           			 <div class="form-group">
+              			<label for="SelAddress">식당주소</label>
+              			<input type="text" name="selleraddress" class="form-control" placeholder="식당주소" >
+           			 </div>
+           			 
+           			 <div class="form-group">
+              			<label for="SelHours">영업시간</label>
+              			<input type="text" name="sellerhours" class="form-control" placeholder="영업시간" >
+           			 </div>
+           			 
+           			 <div class="form-group">
+              			<label for="SelPhone">식당전화번호</label>
+              			<input type="text" name="sellerphone" class="form-control" placeholder="식당전화번호('-'제외)" >
+           			 </div>
+  				</div>
+			</div>
+    		
+            <div class="form-group text-center">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">가입</button>
+            </div>
+          </form>
+        </div>
+      </article>
+  </body>
+</html>

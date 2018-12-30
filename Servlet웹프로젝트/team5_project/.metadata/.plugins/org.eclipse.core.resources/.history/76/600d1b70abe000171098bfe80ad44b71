@@ -1,0 +1,49 @@
+package member.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import member.service.MemberService;
+import member.vo.MemberVO;
+
+public class MemberSaleInsertController implements Controller{
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String saleclass = request.getParameter("saleclass");
+		String salename = request.getParameter("salename");
+		String saleoption = request.getParameter("saleoption");
+		String salefoodinfo = request.getParameter("salefoodinfo");
+		String saleprice = request.getParameter("saleprice"); 
+		
+
+
+		
+
+		
+		MemberVO member = new MemberVO();
+		member.setSaleClass(saleclass);
+		member.setSaleName(salename);
+		member.setSaleOption(saleoption);
+		member.setSaleFoodinfo(salefoodinfo);
+		member.setSaleprice(saleprice);
+		
+		MemberService service = MemberService.getInstance();
+		service.memberSaleInsert(member);
+		
+		
+		request.setAttribute("salename",salename);
+		HttpUtil.forward(request, response, "/result/sale_createOutput.jsp");
+	}
+}
+

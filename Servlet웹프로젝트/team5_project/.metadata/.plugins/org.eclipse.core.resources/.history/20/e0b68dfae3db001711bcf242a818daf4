@@ -1,0 +1,68 @@
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    .page-header1{padding-bottom:9px;
+margin:40px 0 20px;
+border-bottom:1px solid #eee}
+ol,ul{margin-top:0;margin-bottom:10px}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    .sidenav {
+  		display: none;
+	}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 150%;
+      display: block;
+      
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #000000;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+      	
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    .margin {margin-bottom: 30px;}
+  	.bg-1 { 
+  	  padding-top: 70px;
+      background-color: #FACC2E; /* Green */
+      color: #ffffff;
+  	}
+  	.bg-2 { 
+  	  padding-top: 70px;
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  	}
+  	.bg-3 { 
+      background-color: #fff; /* White */
+      color: #555555;
+  	}
+  	@media (min-width: 768px) {
+  	.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  	}
+	}
+
+
+
+	
