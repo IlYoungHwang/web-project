@@ -1,0 +1,185 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+    <script src="../public/jquery-3.1.1.min.js"></script>
+    <script src="../public/semantic/semantic.min.js"></script>
+    <script src="../public/menu.js"></script>
+    <title>식재료 관리</title>
+    <style>
+        body{
+            margin-top: 7em;
+            background-image:url('../public/image/boxed-bg.png');
+        }
+    </style>
+</head>
+<body>
+    
+<div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    <a href="/main" class="item">메인</a>
+    <a href="/ditelist" class="item">식단표</a>
+    <a href="/noticelist?page=1&perpagenum=10" class="item">공지사항</a>
+    <a href="/tendlist?page=1&perpagenum=10" class="item">건의게시판</a>
+    <div class="ui dropdown item">
+        식재료관리
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a href="/food?page=1&perpagenum=10" class="item">식재료관리</a>
+            <a href="/supplier?page=1&perpagenum=10" class="item">납품업체관리</a>
+            <a href="/wakelist?page=1&perpagenum=10" class="item">잔반관리</a>
+        </div>
+    </div>
+    <div class="right menu">
+    <a href="/profile" class="item">회원정보수정</a>
+    <a href="/logout" class="item">로그아웃</a>
+    </div>
+</div>
+
+
+    
+    
+    
+<div class="ui center aligned container">
+    <h2 class="ui header">식재료 관리</h2>
+        
+  
+
+<div class="ui raised very padded segment"> 
+
+<div class="ui right aligned grid">
+  
+
+    <div class="floated ten wide column">    
+        <div class="ui input">
+        <input type="text" placeholder="찾을 내용을 입력 하세요">
+        <button class="ui button ">검색</button>
+        </div>
+    </div>
+    
+    
+  <div class="right floated six wide column">
+      
+     <div class="small ui buttons">
+        <a href="/foodsort?no=1&page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="ui button">납품일자</div></a>
+        <a href="/foodsort?no=2&page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="ui button">재고량</div></a>
+        <a href="/foodsort?no=3&page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="ui button">유통기간</div></a>
+      </div>
+  </div>
+</div>
+
+
+<table class="ui celled table">
+  <thead>
+        <tr>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">식재료번호</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">식재료명</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">납품업체</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">원산지</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">단가</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">재고량</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">납품수량</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">납품일자</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">유통기간</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">마지막수정일</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">수정</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">삭제</font></font></th>
+            
+        
+        </tr>
+    </thead>
+  <tbody>
+    <% rows.forEach(function(item, index){ %>
+    <tr>
+      <td>
+          <div class="ui ribbon label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_no %></font></font></div></td>
+        <td><div id="output"></div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_name %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_supplier %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_origin %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_price %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_inven %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_delcount %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_deldate %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_distrdate %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.food_update %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/fodedit?id=<%= item.food_no %>&page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="mini ui right fluid blue button">수정</div></a></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/foddel?id=<%= item.food_no %>&page=<%= context.page%>&perpagenum=<%= context.perPage%>"><div class="mini ui right fluid red button">삭제</div></a></font></font></td>
+    </tr>
+    <% }) %>
+  </tbody>
+  <tfoot>
+    <tr><th colspan="12">
+      <div class="ui left floated pagination menu">
+        <%
+            if ((context.page) > 1) {
+        %>  
+        <a class="icon item" href="food?page=0&perpagenum=<%= context.perPage %>">
+				<i class="backward icon"></i>
+        </a>
+        <a class="icon item" href="food?page=<%= (context.page-1) %>&perpagenum=<%= context.perPage %>">
+				<i class="left chevron icon"></i>
+        </a>
+        <% } else { %>
+          <a class="icon item">
+            <i class="backward disabled icon"></i>
+          </a>
+          <a class="icon item">
+            <i class="left chevron disabled icon"></i>
+          </a>
+        <% } %>
+          
+        <% 
+			 			
+          for (var i = context.startPage; i <= context.endPage; i++) {
+              if (i != context.page) {
+        %>
+          
+        <a class="item" href="food?page=<%= i %>&perpagenum=<%= context.perPage %>"><%= i %> </a>
+        <% 
+            } else {
+        %>
+            
+          <a class="item active"><%= i %></a>
+          
+        <% 
+            }
+          }
+        %>
+          
+        <%
+          if ((context.page) < context.pageCount) {
+        %>
+          <a class="icon item" href="food?page=<%= (context.page+1) %>&perpagenum=<%=context.perPage %>">
+										<i class="right chevron icon"></i>
+                                        </a>
+        
+        <a class="icon item" href="food?page=<%= (context.pageCount) %>&perpagenum=<%=context.perPage %>">
+										<i class="forward icon"></i>
+                                        </a>
+          
+        <%
+          } else {
+        %> 
+        <a class="icon item">
+          <i class="right chevron disabled icon"></i>
+        </a>
+        <a class="icon item">
+          <i class="forward disabled icon"></i>
+        </a>
+        <% } %>
+        </div>
+        <a href="/foodadd?page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="large ui right floated yellow button">
+         데이터 추가
+        </div></a>
+    </th>
+  </tr></tfoot>
+</table>
+    </div>
+    
+</div>
+</body>
+</html>

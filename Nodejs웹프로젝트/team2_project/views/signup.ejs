@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		
+		<title>로그인</title>
+        
+		<link href="../public/main.css" rel="stylesheet" >
+		<script src="../public/jquery-3.1.1.min.js"></script>
+		<script src="../public/semantic.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+        <script src="../public/menu.js"></script>
+        
+        
+		<script>
+			$(function() {
+				$('.ui.checkbox').checkbox();
+			});
+		</script>
+
+	</head>
+	<body>
+
+        <div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    
+    <a href="/main" class="active item">메인</a>
+    <a href="/ditelist" class="item">식단표</a>
+    <a href="/noticelist" class="item">공지사항</a>
+    <a href="/tendlist" class="item">건의게시판</a>
+    <div class="right menu">        
+    <a href="/login" class="item">로그인</a>
+    <a href="/signup" class="item">회원가입</a>
+    </div>
+    
+</div>
+    
+        
+        
+        
+		<div class="container">
+			
+			<div id="cardbox" class="ui blue fluid card">
+                <% if (message.length > 0) { %>
+                    <div class="ui red message"><%= message %></div>    
+			    <% } %>
+                
+				<form id="form1" method="post" action="/signup">
+                    <h2 class="ui header">회원가입</h2>
+					<table>
+						<tr class="row">
+							<td class="col1"><label id="contentsText">아이디</label></td>
+							<td class="col2" colspan="2">
+								<div class="ui input">
+									<input class="inputbox" type="text" name="id" placeholder="아이디를 입력하세요"/>
+								</div>
+							</td>
+						</tr>
+						<tr class="row">
+							<td class="col1"><label id="contentsText">비밀번호</label></td>
+							<td class="col2" colspan="2">
+								<div class="ui input">
+									<input class="inputbox" type="password" placeholder="비밀번호를 입력하세요" name="password" />
+								</div>
+							</td>
+						</tr>
+                        <tr class="row">
+							<td class="col1"><label id="contentsText">이름</label></td>
+							<td class="col2" colspan="2">
+								<div class="ui input">
+									<input class="inputbox" type="text" name="name" placeholder="이름을 입력하세요"/>
+								</div>
+							</td>
+						</tr>
+                        <tr class="row">
+							<td class="col1"><label id="contentsText">전화번호</label></td>
+							<td class="col2" colspan="2">
+								<div class="ui input">
+									<input class="inputbox" type="text" name="phone" placeholder="전화번호를 입력하세요"/>
+								</div>
+							</td>
+						</tr>
+                        <tr class="row">
+							<td class="col1"><label id="contentsText">직책</label></td>
+							<td class="col2" colspan="2">
+								<div class="ui input">
+									<input class="inputbox" type="text" name="position" placeholder="직책을 입력하세요"/>
+								</div>
+							</td>
+						</tr>
+						<tr valign="baseline">
+                            <td></td>
+							<td id="buttonContainer" align="right"><input  class="ui button" type="submit" value="회원가입" name=""/></td>
+						</tr>
+					</table>
+					
+				</form>
+				<hr>
+                
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+    <script src="../public/jquery-3.1.1.min.js"></script>
+    <script src="../public/semantic/semantic.min.js"></script>
+    <script src="../public/menu.js"></script>
+    <title>건의 게시물 추가</title>	
+    <style>
+        body{
+            margin-top: 7em;
+            background-image:url('../public/image/boxed-bg.png');
+        }
+    </style>
+</head>
+<body>
+    
+<div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    <a href="/main" class="item">메인</a>
+    <a href="/ditelist" class="item">식단표</a>
+    <a href="/noticelist?page=1&perpagenum=10" class="item">공지사항</a>
+    <a href="/tendlist?page=1&perpagenum=10" class="active item">건의게시판</a>
+    <% if(login_success){ %>
+    <div class="ui dropdown item">
+        식재료관리
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a href="/food?page=1&perpagenum=10" class="item">식재료관리</a>
+            <a href="/supplier?page=1&perpagenum=10" class="item">납품업체관리</a>
+            <a href="/wakelist?page=1&perpagenum=10" class="item">잔반관리</a>
+        </div>
+    </div>
+    <div class="right menu">
+    <a href="/profile" class="item">회원정보수정</a>
+    <a href="/logout" class="item">로그아웃</a>
+    </div>
+    <% } else { %>
+    <div class="right menu">
+    <a href="/login" class="item">로그인</a>
+    <a href="/signup" class="item">회원가입</a>
+    </div>
+    <% } %>
+</div>
+    
+<div class="ui raised very padded text container segment">
+    <h2 class="ui header">게시물 정보</h2><br>
+    <div class="ui form">
+        <div class="field">
+    <label>게시물 번호</label>
+    <input type="text" placeholder="First Name" name="no" value="<%= rows.번호 %>"readonly>
+  </div>
+        <div class="field">
+    <label>제목</label>
+    <input type="text"  placeholder="First Name" readonly value="<%= rows.제목 %>">
+  </div>
+        <div class="field">
+    <label>내용</label>
+    <textarea readonly name="content"><%= rows.내용 %></textarea>
+  </div>
+        <div class="field">
+    <label>작성자</label>
+    <input type="text" placeholder="First Name" readonly value="<%= rows.작성자 %>">
+  </div>
+    </div>
+    <br>
+    <input id="edit"class="ui button" type="button" value="수정">
+    <input id="del" class="ui button" type="button" value="삭제">
+    <a href="/tendlist?page=<%= context.page %>&perpagenum=<%= context.perpage %>"><input class="ui button" type="button" value="목록으로"></a>
+</div>
+    
+    
+
+<div id="editmodal" class="ui mini modal">
+
+    <i class="close icon"></i>
+    <div class="header">비밀번호 확인</div>
+    <div class="content">
+      <div class="ui form">
+        <div class="field">
+            <form action="/tendpw" method="post">
+            <input type="hidden" name="page" value="<%= context.page %>">
+            <input type="hidden" name="perpage" value="<%= context.perpage %>">
+            <input type="password"  name="passwd">
+            <input type="hidden" name="writer" value="<%= rows.작성자 %>">
+            </form>
+        </div>
+        <div class="field">
+        <div class="actions">
+            <a href=""><input class="ui button" type="button" value="취소"></a>
+            <input class="ui button" id="edit" type="submit" value="확인">
+        </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+    
+<div id="delmodal" class="ui mini modal">
+    <i class="close icon"></i>
+    <div class="header">비밀번호 확인</div>
+    <div class="content">
+        <form action="/tenddel" method="post">
+      <div class="ui form">
+        <div class="field">
+            <form action="/tenddel" method="post">
+            <input type="hidden" name="page" value="<%= context.page %>">
+            <input type="hidden" name="perpage" value="<%= context.perpage %>">
+            <input type="password" name="passwd">
+            <input type="hidden" name="writer" value="<%= rows.작성자 %>">
+            </form>
+        </div>
+        <div class="field">
+        <div class="actions">
+            <a href=""><input class="ui button" type="button" value="취소"></a>
+            <input class="ui button" id="del" type="submit" value="확인">
+        </div>
+        </div>
+      </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        
+        $(document).ready(function(){
+            
+        $('#del').on("click",function(){
+            $('#delmodal').modal('show');
+        })
+            
+        $('#edit').on("click",function(){
+           $('#editmodal').modal('show');
+        });
+        });
+    
+    </script>
+ 
+   
+</body>
+</html>

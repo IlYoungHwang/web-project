@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+    <script src="../public/jquery-3.1.1.min.js"></script>
+    <script src="../public/semantic/semantic.min.js"></script>
+    <script src="../public/menu.js"></script>
+    <title>건의 게시판</title>	
+    <style>
+        body{
+            margin-top: 7em;
+            background-image:url('../public/image/boxed-bg.png');
+        }
+    </style>
+</head>
+<body>
+    
+<div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    <a href="/main" class="item">메인</a>
+    <a href="/ditelist" class="item">식단표</a>
+    <a href="/noticelist?page=1&perpagenum=10" class="item">공지사항</a>
+    <a href="/tendlist?page=1&perpagenum=10" class="active item">건의게시판</a>
+    <% if(login_success){ %>
+    <div class="ui dropdown item">
+        식재료관리
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a href="/food?page=1&perpagenum=10" class="item">식재료관리</a>
+            <a href="/supplier?page=1&perpagenum=10" class="item">납품업체관리</a>
+            <a href="/wakelist?page=1&perpagenum=10" class="item">잔반관리</a>
+        </div>
+    </div>
+    <div class="right menu">
+    <a href="/profile" class="item">회원정보수정</a>
+    <a href="/logout" class="item">로그아웃</a>
+    </div>
+    <% } else { %>
+    <div class="right menu">
+    <a href="/login" class="item">로그인</a>
+    <a href="/signup" class="item">회원가입</a>
+    </div>
+    <% } %>
+</div>
+    
+    
+<div class="ui center aligned container">
+
+<h2 class="ui header">건의 게시판</h2>
+
+    
+<div class="ui raised very padded segment">    
+<table class="ui celled table">
+  <thead>
+        <tr>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">번호</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">제목</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">작성자</font></font></th>
+            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">작성일자</font></font></th>
+            
+        
+        </tr>
+    </thead>
+  <tbody>
+    <% 
+      rows.forEach(function(item, index){ 
+    %>
+    <tr>
+      <td>
+        <div class="ui ribbon label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.번호 %></font></font></div>
+      </td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/tendinfo?page=<%= context.page %>&perpagenum=<%= context.perPage %>&id=<%= item.번호 %>"><%= item.제목 %></a></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.작성자 %></font></font></td>
+        <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><%= item.작성일자 %></font></font></td>
+    </tr>
+      
+    <% }) %>
+  </tbody>
+  <tfoot>
+    <tr><th colspan="4">
+      <div class="ui left floated pagination menu">
+        <%
+            if ((context.page) > 1) {
+        %>  
+        <a class="icon item" href="tendlist?page=0&perpagenum=<%= context.perPage %>">
+				<i class="backward icon"></i>
+        </a>
+        <a class="icon item" href="tendlist?page=<%= (context.page-1) %>&perpagenum=<%= context.perPage %>">
+				<i class="left chevron icon"></i>
+        </a>
+        <% } else { %>
+          <a class="icon item">
+            <i class="backward disabled icon"></i>
+          </a>
+          <a class="icon item">
+            <i class="left chevron disabled icon"></i>
+          </a>
+        <% } %>
+          
+        <% 
+			 			
+          for (var i = context.startPage; i <= context.endPage; i++) {
+              if (i != context.page) {
+        %>
+          
+        <a class="item" href="tendlist?page=<%= i %>&perpagenum=<%= context.perPage %>"><%= i %> </a>
+        <% 
+            } else {
+        %>
+            
+          <a class="item active"><%= i %></a>
+          
+        <% 
+            }
+          }
+        %>
+          
+        <%
+          if ((context.page) < context.pageCount) {
+        %>
+          <a class="icon item" href="tendlist?page=<%= (context.page+1) %>&perpagenum=<%=context.perPage %>">
+										<i class="right chevron icon"></i>
+                                        </a>
+        
+        <a class="icon item" href="tendlist?page=<%= (context.pageCount) %>&perpagenum=<%=context.perPage %>">
+										<i class="forward icon"></i>
+                                        </a>
+          
+        <%
+          } else {
+        %> 
+        <a class="icon item">
+          <i class="right chevron disabled icon"></i>
+        </a>
+        <a class="icon item">
+          <i class="forward disabled icon"></i>
+        </a>
+        <% } %>
+        </div>
+        <a href="/tendadd?page=<%= context.page %>&perpagenum=<%= context.perPage %>"><div class="large ui right floated yellow button">
+         글쓰기
+        </div></a>
+    </th>
+  </tr></tfoot>
+</table>
+</div>
+</div>
+    
+ 
+</body>
+</html>

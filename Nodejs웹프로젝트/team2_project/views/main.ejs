@@ -1,0 +1,157 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+    <script src="../public/jquery-3.1.1.min.js"></script>
+    <script src="../public/semantic/semantic.min.js"></script>
+    <script src="../public/menu.js"></script>
+    <script src="//www.google.com/jsapi"></script>
+    <script type="text/javascript" src="/bower_components/semantic-ui-calendar/dist/calendar.min.js"></script>
+    <link rel="stylesheet" href="/bower_components/semantic-ui-calendar/dist/calendar.min.css" />
+    
+    <title>식단 관리 솔루션</title>
+    <style>
+        
+        body{
+            margin-top: 7em;
+            background-image:url('../public/image/boxed-bg.png');
+        }
+    </style>
+    <script>
+        var data = [
+            ['잔반', '잔반',{role:'style'}],
+            <% if(rows.length > 0){ %>
+            ['중식', <%= rows[0].잔반량 %>,'blue'],
+            ['석식', <%= rows[1].잔반량 %>,'green'],
+            <% } else{  %>
+            ['중식', 0,'blue'],
+            ['석식', 0,'green'],
+            <% }  %>
+        ];
+        var options = {
+            title: '잔반양 (단위: kg)',
+            width: 400, height: 500,
+            legend : {
+			position : 'none' // 항목 표시 여부 (현재 설정은 안함)
+		}
+        };
+            google.load('visualization', '1.0', {'packages':['corechart']});
+            google.setOnLoadCallback(function() {
+                var chart = new google.visualization.ColumnChart(document.querySelector('#chart_div'));
+                chart.draw(google.visualization.arrayToDataTable(data), options);
+            });
+    </script>
+</head>
+<body>
+
+<div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    
+    <a href="/main" class="active item">메인</a>
+    <a href="/ditelist" class="item">식단표</a>
+    <a href="/noticelist?page=1&perpagenum=10" class="item">공지사항</a>
+    <a href="/tendlist?page=1&perpagenum=10" class="item">건의게시판</a>
+    
+    <% if (login_success) { %>
+     <div class="ui dropdown item">
+        식재료관리
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a href="/food?page=1&perpagenum=10" class="item">식재료관리</a>
+            <a href="/supplier?page=1&perpagenum=10" class="item">납품업체관리</a>
+            <a href="/wakelist?page=1&perpagenum=10" class="item">잔반관리</a>
+        </div>
+    </div>
+    <div class="right menu">        
+    <a href="/profile" class="item">회원정보수정</a>
+    <a href="/logout" class="item">로그아웃</a>
+    </div>
+    <% } else {%>
+    <div class="right menu">        
+    <a href="/login" class="item">로그인</a>
+    <a href="/signup" class="item">회원가입</a>
+    </div>
+    <% } %>
+</div>
+    
+<div class="ui raised very padded text container segment">
+  <h2 class="ui header">오늘의 식사(미구현)</h2>
+  
+    <div class="ui link cards">
+            
+        <div class="card">
+            <div class="image">
+                <img src="../public/image/2b9b636285eac994c628f620e59b43e6.jpg">
+            </div>
+            <div class="text-center content">
+                <div class="header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">중식</font></font></div>
+                
+                <div class="description">
+                    <p>
+                        <font style="vertical-align: inherit;">짜장면,탕수육</font>
+                    </p>
+                    <p>
+                        <font style="vertical-align: inherit;">원산지 : 국산</font>
+                    </p>
+                
+                </div>
+            </div>    
+        </div> 
+             <div class="card">
+            <div class="image">
+                <img src="../public/image/a4d04bd66553a842e5c2effeebd83f9c.jpg">
+            </div>
+            <div class=" content">
+                <div class="header"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">석식</font></font></div>
+                <div class="description">
+                    <p>
+                        <font style="vertical-align: inherit;">평양냉면</font></p>
+                    <p>
+                        <font style="vertical-align: inherit;">불고기 </font>
+                        <font style="vertical-align: inherit;">원산지 : 국산</font>
+                    </p>
+                
+                </div>
+            </div>    
+        </div> 
+            
+    </div>    
+</div>
+    
+    
+<div class="ui raised very padded text container segment">
+    <div class="ui grid">
+    <div class="left floated six wide column">
+      <h2 class="ui header">공지사항</h2>
+    </div>
+    <div class="right two wide column">
+        <a href="/noticelist?page=1&perpagenum=10" ><u>more</u></a>
+    </div>
+    </div>
+  <div class="ui middle aligned divided list">
+ <% for(var i = 0; i < rows2.length ; i++){%>
+  <div class="item">
+    <img class="ui avatar image" src="../public/image/logo.png">
+    <div class="content">
+      <a href="/noticeinfo?id=<%= rows2[i].번호 %>&page=1&perpagenum=10"><font style="vertical-align: inherit;"><%= rows2[i].제목 %></font></a>
+    </div>
+  </div>
+ <% } %>
+</div>
+</div>
+    
+<div class="ui raised very padded text container segment">
+  <h2 class="ui header">오늘의 잔반량</h2>
+    <div class="ui grid">
+        <div class="sixteen wide column">
+            <div id="chart_div"></div> 
+        </div>
+   
+</div>
+</div>
+    
+
+</body>
+</html>

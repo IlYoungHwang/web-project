@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="../public/semantic/semantic.min.css">
+    <script src="../public/jquery-3.1.1.min.js"></script>
+    <script src="../public/semantic/semantic.min.js"></script>
+    <script src="../public/menu.js"></script>
+    <title>식단 추가</title>	
+    <style>
+        body{
+            margin-top: 7em;
+            background-image:url('../public/image/boxed-bg.png');
+        }
+    </style>
+    <script>
+    
+        $(document).ready(function(){
+           function readURL(input){
+               if (input.files && input.files[0]) {
+
+                   var reader = new FileReader();
+                  reader.onload = function (e) {
+                       $('#blah').attr('src', e.target.result);
+                   }
+                   reader.readAsDataURL(input.files[0]);
+               }
+            $('#imgIn').change(function(){
+               readURL(this);
+            });
+               
+           }     
+        });
+
+    </script>
+</head>
+<body>
+    
+<div class="ui top fixed menu">
+    <div class="item">
+        <img src="../public/image/logo.png">
+    </div>    
+    <a href="/main" class="item">메인</a>
+    <a href="/ditelist" class="active item">식단표</a>
+    <a href="/noticelist?page=1&perpagenum=10" class="item">공지사항</a>
+    <a href="/tendlist?page=1&perpagenum=10" class="item">건의게시판</a>
+    <div class="ui dropdown item">
+        식재료관리
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a href="/food?page=1&perpagenum=10" class="item">식재료관리</a>
+            <a href="/supplier?page=1&perpagenum=10" class="item">납품업체관리</a>
+            <a href="/wakelist?page=1&perpagenum=10" class="item">잔반관리</a>
+        </div>
+    </div>
+    <div class="right menu">
+    <a href="/profile" class="item">회원정보수정</a>
+    <a href="/logout" class="item">로그아웃</a>
+    </div>
+</div>
+    
+
+
+<div class="ui raised very padded text container segment">
+    <h2 class="ui header">식단 등록</h2><br>
+<form action="/noticeadd" method="post" enctype="multipart/form-data" class="ui form">
+    
+    <div class="field">
+        <div class="field">
+    <label>등록일자</label>
+    <input type="text" name="day" value="<%= context.today %>" readonly>
+  </div>
+    <label>식단 시간</label>
+    <select>
+        <option selected></option>
+        <option value="중식">중식</option>
+        <option value="석식">석식</option>
+    </select>
+  </div>
+    <div class="field">
+    <label>내용</label>
+    <textarea name="content"></textarea>
+  </div>
+    <div class="field">
+    <label>사진</label>
+    <input type="file" id="imgIn">
+  </div>
+   <img id="blah" src="#" alt="your image" />
+    <div class="field">
+    <label>작성자</label>
+    <input type="text" name="name" readonly value="<%= user.이름 %>">
+  </div>
+    <button class="ui button" type="reset">취소</button>
+    <button class="ui button" type="submit">저장</button>
+</form>
+    </div>
+</body>
+</html>
